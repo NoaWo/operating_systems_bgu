@@ -11,7 +11,18 @@ sys_exit(void)
 {
   int n;
   argint(0, &n);
-  exit(n);
+  //task3
+  uint64 pointer;
+  char msg [32];
+  argaddr(1, &pointer);
+  if(pointer == 0){
+    char *no_msg = "No exit message";
+    strncpy(msg, no_msg, strlen(no_msg));
+  }
+  else{
+    fetchstr(pointer, msg, 32);
+    }
+  exit(n, msg);
   return 0;  // not reached
 }
 
@@ -39,7 +50,10 @@ sys_wait(void)
 {
   uint64 p;
   argaddr(0, &p);
-  return wait(p);
+  //task3
+  uint64 msg;
+  argaddr(1, &msg);
+  return wait(p, msg);
 }
 
 uint64
