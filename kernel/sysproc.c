@@ -21,6 +21,13 @@ sys_getpid(void)
   return myproc()->pid;
 }
 
+//task2
+uint64
+sys_memsize(void)
+{
+  return myproc()->sz;
+}
+
 uint64
 sys_fork(void)
 {
