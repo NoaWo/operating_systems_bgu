@@ -22,3 +22,5 @@
 #define SYS_close  21
 //task2
 #define SYS_memsize 22
+//task5
+#define SYS_set_affinity_mask 23

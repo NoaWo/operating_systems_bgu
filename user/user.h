@@ -26,6 +26,8 @@ int sleep(int);
 int uptime(void);
 //task2
 int memsize(void);
+//task5
+int set_affinity_mask(int);
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -92,7 +92,11 @@ struct proc {
   int xstate;                  // Exit status to be returned to parent's wait
   int pid;                     // Process ID
   //task3
-  char exit_msg[32];            //  exit message
+  char exit_msg[32];           //  exit message
+  //task5
+  int affinity_mask;           // cpus mask
+  //task6
+  int effective_affinity_mask; // cpus effective mask
 
   // wait_lock must be held when using this:
   struct proc *parent;         // Parent process
