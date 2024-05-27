@@ -309,6 +309,7 @@ fork(void)
   np->sz = p->sz;
   
   //task5
+  //task6
   np->affinity_mask = p->affinity_mask;
   np->effective_affinity_mask = p->affinity_mask;
 
@@ -467,6 +468,15 @@ int get_bit(unsigned int var, int x) {
     return (var & bitmask) >> x;
 }
 
+//task6
+int clear_bit(int n, int x) {
+    // Create a mask with the x-th bit set to 0
+    int mask = ~(1 << x);
+    // Clear the x-th bit using the bitwise AND operation
+    n &= mask;
+    return n;
+}
+
 
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -494,7 +504,7 @@ scheduler(void)
       
       //task5
       //task6
-      if(p->state == RUNNABLE && ((p->affinity_mask == 0) || (get_bit(p->affinity_mask, cpu_id) == 1))) {
+      if(p->state == RUNNABLE && ((p->affinity_mask == 0) || (get_bit(p->effective_affinity_mask, cpu_id) == 1))) {
         // Switch to chosen process.  It is the process's job
         // to release its lock and then reacquire it
         // before jumping back to us.
@@ -503,6 +513,12 @@ scheduler(void)
         //task5
         printf("process %d is running on cpu %d\n" , p->pid, cpu_id);
         
+        //task6
+        p->effective_affinity_mask = clear_bit(p->effective_affinity_mask, cpu_id);
+        if(p->effective_affinity_mask == 0 && p->affinity_mask != 0){
+          p->effective_affinity_mask = p->affinity_mask;
+        }
+
         swtch(&c->context, &p->context);
 
         // Process is done running for now.
