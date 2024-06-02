@@ -2,9 +2,9 @@ struct stat;
 
 // system calls
 int fork(void);
-//task3
-int exit(int, ...) __attribute__((noreturn));
-int wait(int*, ...);
+// task3
+int exit(int, char*) __attribute__((noreturn));
+int wait(int*, char*);
 
 int pipe(int*);
 int write(int, const void*, int);
@@ -24,9 +24,9 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
-//task2
+// task2
 int memsize(void);
-//task5
+// task5
 int set_affinity_mask(int);
 
 // ulib.c

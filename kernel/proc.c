@@ -55,9 +55,9 @@ procinit(void)
       initlock(&p->lock, "proc");
       p->state = UNUSED;
       p->kstack = KSTACK((int) (p - proc));
-      //task5
+      // task5
       p->affinity_mask = 0;
-      //task6
+      // task6
       p->effective_affinity_mask = 0;
   }
 }
@@ -128,9 +128,9 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
-  //task5
+  // task5
   p->affinity_mask = 0;
-  //task6
+  // task6
   p->effective_affinity_mask = 0;
 
   // Allocate a trapframe page.
@@ -177,9 +177,9 @@ freeproc(struct proc *p)
   p->killed = 0;
   p->xstate = 0;
   p->state = UNUSED;
-  //task5
+  // task5
   p->affinity_mask = 0;
-  //task6
+  // task6
   p->effective_affinity_mask = 0;
 }
 
@@ -308,9 +308,9 @@ fork(void)
   }
   np->sz = p->sz;
   
-  //task5
-  //task6
+  // task5
   np->affinity_mask = p->affinity_mask;
+  // task6
   np->effective_affinity_mask = p->affinity_mask;
 
   // copy saved user registers.
@@ -395,7 +395,7 @@ exit(int status, char *msg)
   p->xstate = status;
   p->state = ZOMBIE;
   // task3
-    strncpy(p->exit_msg, msg, strlen(msg));
+  strncpy(p->exit_msg, msg, strlen(msg));
   
 
   release(&wait_lock);
@@ -435,8 +435,9 @@ wait(uint64 addr, uint64 msg)
             release(&wait_lock);
             return -1;
           }
-          //task3
-          if(msg != 0 && copyout(p->pagetable, msg, (char *)&pp->exit_msg, sizeof(pp->exit_msg)) < 0){
+          // task3
+          if(msg != 0 && copyout(p->pagetable, msg, (char *)&pp->exit_msg, 
+                                  sizeof(pp->exit_msg)) < 0){
             release(&pp->lock);
             release(&wait_lock);
             return -1;
@@ -462,13 +463,13 @@ wait(uint64 addr, uint64 msg)
   }
 }
 
-//task5
-int get_bit(unsigned int var, int x) {
+// task5
+int get_bit_mask(unsigned int var, int x) {
     unsigned int bitmask = 1 << x;
-    return (var & bitmask) >> x;
+    return (var & bitmask);
 }
 
-//task6
+// task6
 int clear_bit(int n, int x) {
     // Create a mask with the x-th bit set to 0
     int mask = ~(1 << x);
@@ -492,7 +493,7 @@ scheduler(void)
   struct cpu *c = mycpu();
   
   c->proc = 0;
-  //task5
+  // task5
   int cpu_id = cpuid();
 
   for(;;){
@@ -502,18 +503,18 @@ scheduler(void)
     for(p = proc; p < &proc[NPROC]; p++) {
       acquire(&p->lock);
       
-      //task5
-      //task6
-      if(p->state == RUNNABLE && ((p->affinity_mask == 0) || (get_bit(p->effective_affinity_mask, cpu_id) == 1))) {
+      // task5
+      // task6
+      if(p->state == RUNNABLE && ((p->affinity_mask == 0) || (get_bit_mask(p->effective_affinity_mask, cpu_id) != 0))) {
         // Switch to chosen process.  It is the process's job
         // to release its lock and then reacquire it
         // before jumping back to us.
         p->state = RUNNING;
         c->proc = p;
-        //task5
+        // task5
         printf("process %d is running on cpu %d\n" , p->pid, cpu_id);
         
-        //task6
+        // task6
         p->effective_affinity_mask = clear_bit(p->effective_affinity_mask, cpu_id);
         if(p->effective_affinity_mask == 0 && p->affinity_mask != 0){
           p->effective_affinity_mask = p->affinity_mask;

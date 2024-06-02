@@ -43,7 +43,9 @@ main(int argc, char *argv[])
     read(fd, data, sizeof(data));
   close(fd);
 
-  wait(0);
+  // task3
+  wait(0, 0);
 
-  exit(0);
+  // task3
+  exit(0, 0);
 }

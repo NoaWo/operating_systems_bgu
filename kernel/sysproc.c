@@ -11,17 +11,17 @@ sys_exit(void)
 {
   int n;
   argint(0, &n);
-  //task3
+  // task3
   uint64 pointer;
   char msg [32];
   argaddr(1, &pointer);
-  if(pointer == 0){
+  if (pointer == 0) {
     char *no_msg = "No exit message";
     strncpy(msg, no_msg, strlen(no_msg));
   }
-  else{
+  else {
     fetchstr(pointer, msg, 32);
-    }
+  }
   exit(n, msg);
   return 0;  // not reached
 }
@@ -32,15 +32,15 @@ sys_getpid(void)
   return myproc()->pid;
 }
 
-//task2
+// task2
 uint64
 sys_memsize(void)
 {
   return myproc()->sz;
 }
 
-//task5
-//task6
+// task5
+// task6
 uint64
 sys_set_affinity_mask(void){
   int mask;
@@ -61,7 +61,7 @@ sys_wait(void)
 {
   uint64 p;
   argaddr(0, &p);
-  //task3
+  // task3
   uint64 msg;
   argaddr(1, &msg);
   return wait(p, msg);

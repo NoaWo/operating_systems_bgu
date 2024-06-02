@@ -101,9 +101,9 @@ extern uint64 sys_unlink(void);
 extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
-//task2
+// task2
 extern uint64 sys_memsize(void);
-//task5
+// task5
 extern uint64 sys_set_affinity_mask(void);
 
 // An array mapping syscall numbers from syscall.h
@@ -130,9 +130,9 @@ static uint64 (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-//task2
+// task2
 [SYS_memsize] sys_memsize,
-//task5
+// task5
 [SYS_set_affinity_mask] sys_set_affinity_mask,
 };
 

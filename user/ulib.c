@@ -11,7 +11,8 @@ _main()
 {
   extern int main();
   main();
-  exit(0);
+  // task3
+  exit(0, 0);
 }
 
 char*

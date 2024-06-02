@@ -64,7 +64,7 @@ runcmd(struct cmd *cmd)
   struct listcmd *lcmd;
   struct pipecmd *pcmd;
   struct redircmd *rcmd;
-  //task3
+  // task3
   char exit_msg [32];
 
   if(cmd == 0)
@@ -153,7 +153,7 @@ int
 main(void)
 {
   static char buf[100];
-  //task 3
+  // task 3
   char exit_msg [32]; 
   int fd;
 
