@@ -96,7 +96,7 @@ runcmd(struct cmd *cmd)
     lcmd = (struct listcmd*)cmd;
     if(fork1() == 0)
       runcmd(lcmd->left);
-    //tast3
+    // task3
     wait(0, exit_msg);
     printf("%s\n", exit_msg);
 
@@ -153,7 +153,7 @@ int
 main(void)
 {
   static char buf[100];
-  // task 3
+  // task3
   char exit_msg [32]; 
   int fd;
 
@@ -176,9 +176,11 @@ main(void)
     }
     if(fork1() == 0)
       runcmd(parsecmd(buf));
+    // task3
     wait(0, exit_msg);
     printf("%s\n", exit_msg);
   }
+  // task3
   exit(0, "");
 }
 

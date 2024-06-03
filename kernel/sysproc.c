@@ -20,7 +20,10 @@ sys_exit(void)
     strncpy(msg, no_msg, strlen(no_msg));
   }
   else {
-    fetchstr(pointer, msg, 32);
+    if (fetchstr(pointer, msg, 32) < 0) { 
+      // add null terminate if msg was longer than 32 characters
+      msg[31] = '\0';
+    }
   }
   exit(n, msg);
   return 0;  // not reached
